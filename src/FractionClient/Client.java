@@ -5,9 +5,7 @@ import org.omg.CosNaming.NamingContextPackage.*;
 import org.omg.CORBA.*;
 
 public class Client {
-    static Fraction fractionImpl;
-
-    public static String toString(FractionRep fr)
+    private static String toString(FractionRep fr)
     {
         return fr.numerator+"/"+fr.denominator;
     }
@@ -27,11 +25,11 @@ public class Client {
 
             // resolve the Object Reference in Naming
             String name = "Fraction";
-            fractionImpl = FractionHelper.narrow(ncRef.resolve_str(name));
+            Fraction fractionProxy = FractionHelper.narrow(ncRef.resolve_str(name));
 
             FractionRep lhs = new FractionRep(3,4);
             FractionRep rhs = new FractionRep(2,8);
-            FractionRep ret = fractionImpl.add(lhs,rhs);
+            FractionRep ret = fractionProxy.add(lhs,rhs);
             System.out.println(toString(lhs)+" + "+toString(rhs)+" = "+toString(ret));
 
         } catch (Exception e) {
